@@ -1,13 +1,369 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Josefin+Slab:wght@100;200;300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    margin: 0;
+    overflow: hidden;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer components {
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+  }
+  
+  .section-padding {
+    @apply py-16 px-4 sm:px-6 lg:px-8;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto;
+  }
+}
+
+/* Modal animation */
+@keyframes modalAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Custom animations for cosmic background */
+@keyframes twinkle {
+  0%, 100% { 
+    opacity: 0.1; 
+    filter: brightness(0.5);
+  }
+  50% { 
+    opacity: 1; 
+    filter: brightness(1.5);
+  }
+}
+
+@keyframes rotateAndScale {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(90deg) scale(1.25); }
+  50% { transform: rotate(180deg) scale(1.5); }
+  75% { transform: rotate(270deg) scale(1.25); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes sunRotateScale {
+  0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+  25% { transform: translate(-50%, -50%) rotate(90deg) scale(1.1); }
+  50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.2); }
+  75% { transform: translate(-50%, -50%) rotate(270deg) scale(1.1); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
+}
+
+@keyframes sunPulse {
+  0%, 100% { 
+    transform: scale(1);
+    filter: drop-shadow(0 0 20px rgba(255, 200, 50, 0.7)) brightness(1);
+  }
+  50% { 
+    transform: scale(1.02);
+    filter: drop-shadow(0 0 25px rgba(255, 200, 50, 0.85)) brightness(1.1);
+  }
+}
+
+@keyframes spikeGlow {
+  0%, 100% { 
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scaleY(0.8) scaleX(0.9);
+  }
+  50% { 
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleY(1.3) scaleX(1.1);
+  }
+}
+
+@keyframes sunImagePulse {
+  0%, 100% { 
+    transform: scale(0.95);
+  }
+  50% { 
+    transform: scale(1.05);
+  }
+}
+
+@keyframes sunRotate {
+  0% { 
+    transform: rotate(0deg);
+  }
+  100% { 
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes starTwinkle {
+  0%, 100% { 
+    opacity: 0.2; 
+    filter: brightness(0.3) blur(0px);
+    transform: scale(0.8);
+  }
+  50% { 
+    opacity: 1; 
+    filter: brightness(2) blur(0.5px);
+    transform: scale(1.2);
+  }
+}
+
+@keyframes starOrbit3D {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes starSelfRotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes counterRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes mailOrbit3D {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes mailSelfRotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes counterRotateMail {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes threeDOrbit3D {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes threeDSelfRotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.08);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes counterRotate3D {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes filesOrbit3D {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes filesSelfRotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes counterRotateFiles {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes iconBreathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes iconFloat1 {
+  0%, 100% {
+    transform: translate(150px, -150px);
+  }
+  50% {
+    transform: translate(150px, -165px);
+  }
+}
+
+@keyframes iconFloat2 {
+  0%, 100% {
+    transform: translate(200px, 100px);
+  }
+  25% {
+    transform: translate(205px, 90px);
+  }
+  75% {
+    transform: translate(195px, 110px);
+  }
+}
+
+@keyframes iconFloat3 {
+  0%, 100% {
+    transform: translate(-250px, 150px);
+  }
+  33% {
+    transform: translate(-258px, 138px);
+  }
+  66% {
+    transform: translate(-240px, 158px);
+  }
+}
+
+@keyframes iconFloat4 {
+  0%, 100% {
+    transform: translate(-300px, -200px);
+  }
+  25% {
+    transform: translate(-310px, -205px);
+  }
+  50% {
+    transform: translate(-300px, -215px);
+  }
+  75% {
+    transform: translate(-290px, -205px);
+  }
+}
+
+/* Mobile animations with smaller orbit radius */
+@keyframes iconFloat1Mobile {
+  0%, 100% {
+    transform: translate(80px, -180px);
+  }
+  50% {
+    transform: translate(80px, -190px);
+  }
+}
+
+@keyframes iconFloat2Mobile {
+  0%, 100% {
+    transform: translate(100px, 100px);
+  }
+  25% {
+    transform: translate(105px, 95px);
+  }
+  75% {
+    transform: translate(95px, 105px);
+  }
+}
+
+@keyframes iconFloat3Mobile {
+  0%, 100% {
+    transform: translate(-110px, 220px);
+  }
+  33% {
+    transform: translate(-115px, 215px);
+  }
+  66% {
+    transform: translate(-105px, 225px);
+  }
+}
+
+@keyframes iconFloat4Mobile {
+  0%, 100% {
+    transform: translate(-120px, -310px);
+  }
+  25% {
+    transform: translate(-125px, -315px);
+  }
+  50% {
+    transform: translate(-120px, -320px);
+  }
+  75% {
+    transform: translate(-115px, -315px);
+  }
+}
+
+/* Flower floating animation */
+@keyframes flowerFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-8px) rotate(5deg) scale(1.05);
+  }
+  50% {
+    transform: translateY(5px) rotate(-3deg) scale(1.02);
+  }
+  75% {
+    transform: translateY(-5px) rotate(-5deg) scale(1.03);
+  }
 }
