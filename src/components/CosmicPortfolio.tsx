@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import sunImage from "../assets/images/sun.png";
-import starImage from "../assets/images/star.png";
 import mailImage from "../assets/images/mail.png";
 import tvImage from "../assets/images/tv.png";
 import filesImage from "../assets/images/files.png";
 import linkedinImage from "../assets/images/linkedin.png";
 import twitterImage from "../assets/images/twitter.png";
+import redPinImage from "../assets/images/red-pin.png";
 import backgroundMusic from "../assets/audio/Tout le monde est fou (Club Version).mp3";
 
 const CosmicPortfolio = () => {
@@ -454,27 +454,30 @@ const CosmicPortfolio = () => {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ zIndex: 15 }}>
-        {/* Star - Top Right */}
+        {/* Pin - Top Right */}
         <div
           className="absolute"
           style={{
             left: "50%",
             top: "50%",
-            pointerEvents: "none",
+            pointerEvents: "auto",
             animation: isMobile
               ? "iconFloat1Mobile 4s infinite ease-in-out"
               : "iconFloat1 4s infinite ease-in-out",
           }}>
-          {/* Star with wrapper */}
-          <div
-            className="relative"
+          {/* Pin with wrapper and link */}
+          <a
+            href="https://www.get-pins.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative block"
             style={{
               width: isMobile ? "90px" : "120px",
               height: isMobile ? "90px" : "120px",
             }}>
             <img
-              src={starImage}
-              alt="Orbiting Star"
+              src={redPinImage}
+              alt="Red Pin"
               style={{
                 width: "100%",
                 height: "100%",
@@ -500,7 +503,7 @@ const CosmicPortfolio = () => {
                 00
               </span>
             </div>
-          </div>
+          </a>
         </div>
 
         {/* Mail - Bottom Right - Clickable */}

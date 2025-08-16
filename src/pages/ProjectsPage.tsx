@@ -149,7 +149,7 @@ const ProjectsPage: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen bg-white relative overflow-hidden"
+      className="min-h-screen bg-black relative overflow-hidden"
       ref={containerRef}>
       {/* Background flowers - rendered inline like stars */}
       {flowers.map((flower) => {
@@ -230,7 +230,7 @@ const ProjectsPage: React.FC = () => {
       {/* Back button */}
       <button
         onClick={() => navigate("/")}
-        className="absolute top-4 left-4 text-black hover:text-gray-600 transition-colors z-10"
+        className="absolute top-4 left-4 text-white hover:text-gray-400 transition-colors z-10"
         style={{
           fontSize: "18px",
           fontFamily: "'Josefin Slab', serif",
@@ -247,8 +247,8 @@ const ProjectsPage: React.FC = () => {
             onClick={() => handleFileClick(project.meta)}
             className={`text-2xl mb-6 transition-all duration-300 ${
               expandedFile === project.meta
-                ? "text-black font-bold translate-x-2"
-                : "text-gray-600 hover:text-black"
+                ? "text-white font-bold translate-x-2"
+                : "text-gray-400 hover:text-white"
             }`}
             style={{
               fontFamily: "'Josefin Slab', serif",
