@@ -14,6 +14,7 @@ const ProjectsPage: React.FC = () => {
   const [flowers, setFlowers] = useState<any[]>([]);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const [flowerDisplacements, setFlowerDisplacements] = useState<{[key: string]: {x: number, y: number, rotation: number, scale: number}}>({});
   
   // Snake chain state
   const [chainNodes, setChainNodes] = useState<ChainNode[]>([]);
@@ -92,49 +93,119 @@ const ProjectsPage: React.FC = () => {
     { name: "Halcyon", meta: "Halcyon" },
   ];
 
-  // Flower component with soft, rounded petals
-  // Get flower position - affected by creature body
-  const getFlowerPosition = (flower: any) => {
-    if (!containerRef.current) return { x: 0, y: 0 };
+  // Calculate flower displacement with improved physics
+  React.useEffect(() => {
+    if (!containerRef.current || chainNodes.length === 0) return;
 
     const rect = containerRef.current.getBoundingClientRect();
-    const flowerX = (flower.x / 100) * rect.width;
-    const flowerY = (flower.y / 100) * rect.height;
+    const newDisplacements: {[key: string]: {x: number, y: number, rotation: number, scale: number}} = {};
 
-    let totalPushX = 0;
-    let totalPushY = 0;
+    flowers.forEach(flower => {
+      const flowerX = (flower.x / 100) * rect.width;
+      const flowerY = (flower.y / 100) * rect.height;
+      
+      let totalPushX = 0;
+      let totalPushY = 0;
+      let closestDistance = Infinity;
+      let creatureVelocityX = 0;
+      let creatureVelocityY = 0;
 
-    // Check distance from creature segments
-    if (chainNodes.length > 0) {
-      for (let i = 0; i < Math.min(chainNodes.length, 20); i++) { // Check first 20 segments
+      // Check distance from creature segments with more sophisticated physics
+      for (let i = 0; i < Math.min(chainNodes.length, 30); i++) {
         const node = chainNodes[i];
-        const dx = node.x - flowerX;
-        const dy = node.y - flowerY;
+        const dx = flowerX - node.x;
+        const dy = flowerY - node.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        // Stronger repulsion from creature body
-        const repulsionRange = i < 5 ? 120 : 80; // Head has larger effect
-        const maxRepulsion = i < 5 ? 100 : 60;
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          // Track creature movement direction
+          if (i < chainNodes.length - 1) {
+            creatureVelocityX = node.x - chainNodes[i + 1].x;
+            creatureVelocityY = node.y - chainNodes[i + 1].y;
+          }
+        }
         
-        if (flower.size < 100 && distance < repulsionRange && distance > 0) {
-          const repulsionStrength = Math.pow((repulsionRange - distance) / repulsionRange, 1.5);
-          const force = repulsionStrength * maxRepulsion;
-          totalPushX -= (dx / distance) * force;
-          totalPushY -= (dy / distance) * force;
+        // Different effect zones for more realistic wading
+        const innerZone = i < 5 ? 60 : 40; // Direct contact zone
+        const outerZone = i < 5 ? 150 : 100; // Influence zone
+        
+        if (distance < outerZone && distance > 0) {
+          // Multi-layered displacement calculation
+          let force = 0;
+          
+          if (distance < innerZone) {
+            // Strong push in inner zone - flowers get pushed aside
+            force = Math.pow((innerZone - distance) / innerZone, 0.8) * 120;
+          } else {
+            // Gentle sway in outer zone
+            force = Math.pow((outerZone - distance) / (outerZone - innerZone), 2) * 40;
+          }
+          
+          // Apply force perpendicular to creature movement for parting effect
+          const perpX = -dy / distance; // Perpendicular to radial
+          const perpY = dx / distance;
+          
+          // Mix radial push with perpendicular parting
+          const radialWeight = 0.7;
+          const perpWeight = 0.3;
+          
+          totalPushX += (dx / distance) * force * radialWeight + perpX * force * perpWeight;
+          totalPushY += (dy / distance) * force * radialWeight + perpY * force * perpWeight;
+          
+          // Add wake effect based on creature velocity
+          if (i < 10 && movementSpeed > 2) {
+            const wakeForce = force * 0.3;
+            totalPushX += creatureVelocityX * wakeForce * 0.1;
+            totalPushY += creatureVelocityY * wakeForce * 0.1;
+          }
         }
       }
-    }
 
-    // Limit maximum displacement
-    const maxDisplacement = 150;
-    const totalDistance = Math.sqrt(totalPushX * totalPushX + totalPushY * totalPushY);
-    if (totalDistance > maxDisplacement) {
-      totalPushX = (totalPushX / totalDistance) * maxDisplacement;
-      totalPushY = (totalPushY / totalDistance) * maxDisplacement;
-    }
+      // Apply spring-back force for recovery
+      const currentDisplacement = flowerDisplacements[flower.id] || { x: 0, y: 0, rotation: 0, scale: 1 };
+      const springForce = 0.08; // How quickly flowers spring back
+      const damping = 0.85; // Smooth the motion
+      
+      const targetX = totalPushX;
+      const targetY = totalPushY;
+      
+      // Smooth interpolation with spring physics
+      const newX = currentDisplacement.x * damping + targetX * (1 - damping);
+      const newY = currentDisplacement.y * damping + targetY * (1 - damping);
+      
+      // Calculate rotation based on displacement direction
+      const rotation = Math.atan2(newY, newX) * (180 / Math.PI) * 0.1;
+      
+      // Scale flowers down slightly when very close to creature
+      const scale = closestDistance < 40 ? 0.85 : 
+                   closestDistance < 80 ? 0.9 + (closestDistance - 40) / 400 : 1;
+      
+      // Limit maximum displacement with softer boundaries
+      const maxDisplacement = flower.size < 50 ? 80 : 150;
+      const totalDistance = Math.sqrt(newX * newX + newY * newY);
+      
+      if (totalDistance > maxDisplacement) {
+        const limitedX = (newX / totalDistance) * maxDisplacement;
+        const limitedY = (newY / totalDistance) * maxDisplacement;
+        newDisplacements[flower.id] = { 
+          x: limitedX, 
+          y: limitedY, 
+          rotation: rotation,
+          scale: scale
+        };
+      } else {
+        newDisplacements[flower.id] = { 
+          x: newX, 
+          y: newY, 
+          rotation: rotation,
+          scale: scale
+        };
+      }
+    });
 
-    return { x: totalPushX, y: totalPushY };
-  };
+    setFlowerDisplacements(newDisplacements);
+  }, [chainNodes, flowers, movementSpeed]);
 
   // Initialize snake chain
   React.useEffect(() => {
@@ -792,9 +863,10 @@ const ProjectsPage: React.FC = () => {
         })()}
       </svg>
       
-      {/* Background flowers - rendered inline like stars */}
+      {/* Background flowers - rendered with improved wading physics */}
       {flowers.map((flower) => {
-        const effect = getFlowerPosition(flower);
+        const displacement = flowerDisplacements[flower.id] || { x: 0, y: 0, rotation: 0, scale: 1 };
+        
         return (
           <div
             key={flower.id}
@@ -802,10 +874,11 @@ const ProjectsPage: React.FC = () => {
             style={{
               left: `${flower.x}%`,
               top: `${flower.y}%`,
-              transform: `translate(${effect.x}px, ${effect.y}px)`,
-              transition: "transform 0.2s ease-out",
+              transform: `translate(${displacement.x}px, ${displacement.y}px) rotate(${displacement.rotation}deg) scale(${displacement.scale})`,
+              transition: "transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
               opacity: flower.opacity,
               zIndex: flower.zIndex || 1,
+              transformOrigin: 'center bottom', // Flowers bend from the stem
             }}>
             <div
               style={{
@@ -817,7 +890,10 @@ const ProjectsPage: React.FC = () => {
                 width={flower.size}
                 height={flower.size}
                 viewBox="0 0 100 100"
-                xmlns="http://www.w3.org/2000/svg">
+                xmlns="http://www.w3.org/2000/svg"
+                style={{
+                  filter: displacement.scale < 0.95 ? 'brightness(0.9)' : 'none', // Darken compressed flowers
+                }}>
                 <g fill={flower.petalColor} opacity="1">
                   <ellipse
                     cx="50"
