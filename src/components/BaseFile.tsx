@@ -39,21 +39,13 @@ const BaseFile: React.FC<BaseFileProps> = ({
         />
       </svg>
       
-      {/* Content overlay */}
-      <div className="absolute inset-0 flex flex-col p-8">
-        {/* Top section for title/header */}
-        <div className="flex-none mb-4">
-          {/* Header content will go here */}
-        </div>
-        
-        {/* Main content area */}
-        <div className="flex-1 overflow-auto">
-          {children}
-        </div>
-        
-        {/* Bottom section for footer/actions */}
-        <div className="flex-none mt-4">
-          {/* Footer content will go here */}
+      {/* Content overlay - accounts for file shape with folded corner */}
+      <div className="absolute inset-0">
+        <div className="relative w-full h-full">
+          {/* Content area that respects the file boundaries */}
+          <div className="absolute left-[18%] top-[12%] right-[2%] bottom-[8%] overflow-auto">
+            {children}
+          </div>
         </div>
       </div>
     </div>

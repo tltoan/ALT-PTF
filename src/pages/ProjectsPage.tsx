@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BaseFile from "../components/BaseFile";
+import SourcererCaseStudy from "../assets/sourcerer_casestudy.pdf";
 
 interface ChainNode {
   x: number;
@@ -33,6 +34,30 @@ const ProjectsPage: React.FC = () => {
   const handleFileClick = (fileName: string) => {
     setExpandedFile(expandedFile === fileName ? null : fileName);
   };
+
+  // Load Twitter embed script when Cykle is expanded
+  useEffect(() => {
+    if (expandedFile === "Cykle") {
+      // Load Twitter widgets script
+      const script = document.createElement("script");
+      script.src = "https://platform.twitter.com/widgets.js";
+      script.async = true;
+      script.charset = "utf-8";
+      document.body.appendChild(script);
+      
+      // Reload Twitter widgets if already loaded
+      if ((window as any).twttr && (window as any).twttr.widgets) {
+        (window as any).twttr.widgets.load();
+      }
+      
+      return () => {
+        // Cleanup
+        if (document.body.contains(script)) {
+          document.body.removeChild(script);
+        }
+      };
+    }
+  }, [expandedFile]);
 
   // Snake chain movement function
   const moveTo = (x: number, y: number, nodes: ChainNode[]) => {
@@ -90,7 +115,6 @@ const ProjectsPage: React.FC = () => {
     { name: "Pinned It", meta: "PinnedIt" },
     { name: "Cykle", meta: "Cykle" },
     { name: "SourcererAI", meta: "SourcererAI" },
-    { name: "Halcyon", meta: "Halcyon" },
   ];
 
   // Calculate flower displacement with improved physics
@@ -991,19 +1015,85 @@ const ProjectsPage: React.FC = () => {
           strokeWidth={3}
           meta="Cykle">
           <div
-            className="text-black p-8 pl-[300px] mt-10"
+            className="text-black p-4 md:p-6 lg:p-8 xl:p-12"
             style={{ fontFamily: "'Josefin Slab', serif" }}>
-            <h1 className="text-4xl mb-4">
-              Cykle | Co-founder : Technical and Product
+            <h1 className="text-2xl md:text-3xl lg:text-4xl mb-3 font-bold">
+              Cykle
             </h1>
-            <p className="text-lg mb-4">📍 Location Thrifting, Everywhere.</p>
+            <p className="text-lg md:text-xl mb-4 text-gray-700">Co-founder | Technical & Product Lead</p>
+            
             <div className="space-y-4">
+              {/* Problem & Solution */}
               <div>
-                <h3 className="text-xl font-semibold">Features</h3>
-                <ul className="list-disc list-inside">
-                  <li>Incubated w/ F.INC | Off SEASON</li>
-                  <li>Accelerator w/ Launch Chapel Hill</li>
-                </ul>
+                <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">The Vision</h3>
+                <p className="text-sm md:text-base text-gray-700 mb-2">
+                  B2B2C marketplace connecting shoppers with verified thrift stores. Solving the fragmented secondhand fashion market through AI-powered cataloging and unified inventory discovery.
+                </p>
+              </div>
+
+              {/* Key Features */}
+              <div>
+                <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">What We Built</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm md:text-base">
+                  <div>
+                    <p className="font-medium text-gray-800 mb-1">For Shoppers</p>
+                    <ul className="text-gray-600 space-y-1">
+                      <li>• Tinder-style discovery feed</li>
+                      <li>• Secure checkout (Apple Pay/Stripe)</li>
+                      <li>• In-app messaging with stores</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-800 mb-1">For Stores</p>
+                    <ul className="text-gray-600 space-y-1">
+                      <li>• AI-powered listing (Moondream)</li>
+                      <li>• POS integration (Square/Shopify)</li>
+                      <li>• Inventory management</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tech Stack */}
+              <div>
+                <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">Tech Stack</h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">React Native</span>
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">TypeScript</span>
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">Firebase</span>
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">Stripe</span>
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">Moondream AI</span>
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">Unified.to</span>
+                </div>
+              </div>
+
+              {/* Recognition */}
+              <div className="pt-2 border-t border-gray-200">
+                <p className="text-xs md:text-sm text-gray-600">
+                  <span className="font-medium">Recognition:</span> F.INC Off SEASON Incubator | Launch Chapel Hill Accelerator
+                </p>
+                <p className="text-xs md:text-sm text-gray-600 mt-1">
+                  <span className="font-medium">Website:</span>{" "}
+                  <a href="https://www.cykle.co/" target="_blank" rel="noopener noreferrer" 
+                     className="text-blue-600 hover:text-blue-800 underline">
+                    cykle.co
+                  </a>
+                </p>
+              </div>
+
+              {/* Twitter Embed */}
+              <div className="pt-3">
+                <div className="max-w-full overflow-hidden rounded-xl" style={{ borderRadius: '12px' }}>
+                  <blockquote 
+                    className="twitter-tweet" 
+                    data-media-max-width="560"
+                    data-theme="light"
+                    style={{ borderRadius: '12px' }}
+                    dangerouslySetInnerHTML={{
+                      __html: `<p lang="en" dir="ltr">the summer things took off<br><br>(does this count as a launch video?)<br><br>thank you <a href="https://twitter.com/fdotinc?ref_src=twsrc%5Etfw">@fdotinc</a> for a great summer! <a href="https://t.co/TdTPqB2fME">pic.twitter.com/TdTPqB2fME</a></p>&mdash; antony tran (@antonyltran) <a href="https://twitter.com/antonyltran/status/1951108250734305461?ref_src=twsrc%5Etfw">August 1, 2025</a>`
+                    }}>
+                  </blockquote>
+                </div>
               </div>
             </div>
           </div>
@@ -1023,60 +1113,92 @@ const ProjectsPage: React.FC = () => {
           strokeWidth={3}
           meta="SourcererAI">
           <div
-            className="text-black p-8 pl-[300px] mt-10"
+            className="text-black p-4 md:p-6 lg:p-8 xl:p-12"
             style={{ fontFamily: "'Josefin Slab', serif" }}>
-            <h1 className="text-4xl mb-4">
-              SourcererAI | Product Design & UX Researcher Intern
+            <h1 className="text-2xl md:text-3xl lg:text-4xl mb-3 font-bold">
+              SourcererAI
             </h1>
-            <p className="text-lg mb-4">
-              Agentic Supply Chain and Procurement | backed by A16z
-            </p>
+            <p className="text-lg md:text-xl mb-4 text-gray-700">Product Design & UX Research Intern</p>
+            <p className="text-sm md:text-base mb-4 text-gray-600">AI-Powered Global Procurement Platform | Backed by A16Z</p>
+            
             <div className="space-y-4">
+              {/* Core Responsibilities */}
               <div>
-                <ul>
-                  <li></li>
+                <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">My Impact</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm md:text-base">
+                  <div>
+                    <p className="font-medium text-gray-800 mb-1">AI Interaction Design</p>
+                    <ul className="text-gray-600 space-y-1">
+                      <li>• User flows for spec uploads & AI responses</li>
+                      <li>• Plain-English to procurement translation</li>
+                      <li>• Trust & transparency in AI decisions</li>
+                      <li>• Edge cases & error state handling</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-800 mb-1">Enterprise UX</p>
+                    <ul className="text-gray-600 space-y-1">
+                      <li>• Quoting & ordering experiences</li>
+                      <li>• ERP system integration workflows</li>
+                      <li>• Multi-quote management dashboards</li>
+                      <li>• Freight, tariff & financing displays</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Methods & Process */}
+              <div>
+                <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">Design Process</h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">Figma Prototyping</span>
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">Usability Testing</span>
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">Design Systems</span>
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">User Research</span>
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">Cross-functional Collaboration</span>
+                </div>
+              </div>
+
+              {/* Key Achievements */}
+              <div>
+                <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">Key Achievements</h3>
+                <ul className="text-sm md:text-base text-gray-700 space-y-1">
+                  <li>• Designed supplier vetting transparency features</li>
+                  <li>• Created cost breakdown visualizations</li>
+                  <li>• Built design system aligned with AI-native vision</li>
+                  <li>• Led design of company website (sourcererai.com)</li>
+                  <li>• Tested with operations managers & brand teams</li>
                 </ul>
               </div>
-            </div>
-          </div>
-        </BaseFile>
-      </div>
 
-      {/* Halcyon File - front */}
-      <div
-        className="absolute right-0 top-1/2 -translate-y-1/2 w-[100vw] h-[95vh] transition-all duration-500 ease-in-out"
-        style={{
-          transform: `translateX(${expandedFile === "Halcyon" ? 10 : 78}%) translateY(-50%)`,
-          zIndex: expandedFile === "Halcyon" ? 100 : 52,
-        }}>
-        <BaseFile
-          fillColor="rgba(255, 255, 255, 1)"
-          strokeColor="black"
-          strokeWidth={3}
-          meta="Halcyon">
-          <div
-            className="text-black p-8 pl-[300px] mt-10"
-            style={{ fontFamily: "'Josefin Slab', serif" }}>
-            <h1 className="text-4xl mb-4">Halcyon</h1>
-            <p className="text-lg mb-4">
-              Your Halcyon project information here
-            </p>
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-xl font-semibold">Overview</h3>
-                <p>Project overview and goals</p>
+              {/* Links */}
+              <div className="pt-2 border-t border-gray-200">
+                <p className="text-xs md:text-sm text-gray-600">
+                  <span className="font-medium">Website:</span>{" "}
+                  <a href="https://sourcererai.com/" target="_blank" rel="noopener noreferrer" 
+                     className="text-blue-600 hover:text-blue-800 underline">
+                    sourcererai.com
+                  </a>
+                </p>
+                <p className="text-xs md:text-sm text-gray-600 mt-1">
+                  <span className="font-medium">Case Study:</span>{" "}
+                  <a href={SourcererCaseStudy} target="_blank" rel="noopener noreferrer" 
+                     className="text-blue-600 hover:text-blue-800 underline">
+                    View PDF Portfolio
+                  </a>
+                </p>
               </div>
             </div>
           </div>
         </BaseFile>
       </div>
 
-      {/* Pinned It File - frontmost */}
+      {/* Pinned It File - front */}
       <div
         className="absolute right-0 top-1/2 -translate-y-1/2 w-[100vw] h-[95vh] transition-all duration-500 ease-in-out"
         style={{
-          transform: `translateX(${expandedFile === "PinnedIt" ? 10 : 83}%) translateY(-50%)`,
-          zIndex: expandedFile === "PinnedIt" ? 100 : 53,
+          transform: `translateX(${expandedFile === "PinnedIt" ? 10 : 78}%) translateY(-50%)`,
+          zIndex: expandedFile === "PinnedIt" ? 100 : 52,
         }}>
         <BaseFile
           fillColor="rgba(255, 255, 255, 1)"
@@ -1084,16 +1206,86 @@ const ProjectsPage: React.FC = () => {
           strokeWidth={3}
           meta="PinnedIt">
           <div
-            className="text-black p-8 pl-[300px] mt-10"
+            className="text-black p-4 md:p-6 lg:p-8 xl:p-12"
             style={{ fontFamily: "'Josefin Slab', serif" }}>
-            <h1 className="text-4xl mb-4">Pinned It</h1>
-            <p className="text-lg mb-4">
-              Your Pinned It project information here
-            </p>
+            <h1 className="text-2xl md:text-3xl lg:text-4xl mb-3 font-bold">
+              Pinned It
+            </h1>
+            <p className="text-lg md:text-xl mb-4 text-gray-700">Founder & Developer | The Anti-Instagram</p>
+            
             <div className="space-y-4">
+              {/* Vision */}
               <div>
-                <h3 className="text-xl font-semibold">Overview</h3>
-                <p>Project overview and goals</p>
+                <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">The Vision</h3>
+                <p className="text-sm md:text-base text-gray-700 mb-2">
+                  Capture authentic moments through multi-sensory data. No algorithms, no ads, no data selling - just real memories with the people who matter.
+                </p>
+              </div>
+
+              {/* Key Features */}
+              <div>
+                <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">What I Built</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm md:text-base">
+                  <div>
+                    <p className="font-medium text-gray-800 mb-1">Core Features</p>
+                    <ul className="text-gray-600 space-y-1">
+                      <li>• Dual-camera photo pins</li>
+                      <li>• Weather & music capture</li>
+                      <li>• Daily adventure mapping</li>
+                      <li>• Voice notes & journaling</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-800 mb-1">Social Features</p>
+                    <ul className="text-gray-600 space-y-1">
+                      <li>• Friend codes (no algorithms)</li>
+                      <li>• Private group circles</li>
+                      <li>• Global discovery pins</li>
+                      <li>• "Digital graffiti" concept</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tech Stack */}
+              <div>
+                <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">Tech Stack</h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">React Native</span>
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">Supabase</span>
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">PostGIS</span>
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">Apple Maps</span>
+                  <span className="px-2 py-1 bg-gray-100 rounded text-xs md:text-sm">RLS Security</span>
+                </div>
+              </div>
+
+              {/* Business Model */}
+              <div>
+                <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">Business Model</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm md:text-base">
+                  <div className="bg-gray-50 p-2 rounded">
+                    <p className="font-medium text-gray-800">Free Tier</p>
+                    <p className="text-gray-600 text-xs md:text-sm">Unlimited pins • 5 friends • 2-month retention</p>
+                  </div>
+                  <div className="bg-red-50 p-2 rounded">
+                    <p className="font-medium text-gray-800">Premium ($2.99/mo)</p>
+                    <p className="text-gray-600 text-xs md:text-sm">Unlimited friends • Permanent storage</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Status */}
+              <div className="pt-2 border-t border-gray-200">
+                <p className="text-xs md:text-sm text-gray-600">
+                  <span className="font-medium">Status:</span> Live on iOS App Store | Continental Pin Campaign Active
+                </p>
+                <p className="text-xs md:text-sm text-gray-600 mt-1">
+                  <span className="font-medium">Website:</span>{" "}
+                  <a href="https://www.get-pins.com/" target="_blank" rel="noopener noreferrer" 
+                     className="text-blue-600 hover:text-blue-800 underline">
+                    get-pins.com
+                  </a>
+                </p>
               </div>
             </div>
           </div>
