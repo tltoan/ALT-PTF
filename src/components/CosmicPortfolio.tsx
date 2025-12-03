@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import sunImage from "../assets/images/sun.png";
-import mailImage from "../assets/images/mail.png";
-import tvImage from "../assets/images/tv.png";
-import filesImage from "../assets/images/files.png";
+import circleImage from "../assets/images/circle.png";
+import saturnImage from "../assets/images/saturn.png";
+import spireImage from "../assets/images/spire.png";
 import linkedinImage from "../assets/images/linkedin.png";
 import twitterImage from "../assets/images/twitter.png";
 import redPinImage from "../assets/images/red-pin.png";
@@ -126,7 +126,7 @@ const CosmicPortfolio = () => {
       }
     };
 
-    attemptAutoplay();
+    // attemptAutoplay();
 
     return () => {
       audioRef.current?.pause();
@@ -454,57 +454,7 @@ const CosmicPortfolio = () => {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ zIndex: 15 }}>
-        {/* Pin - Top Right */}
-        <div
-          className="absolute"
-          style={{
-            left: "50%",
-            top: "50%",
-            pointerEvents: "auto",
-            animation: isMobile
-              ? "iconFloat1Mobile 4s infinite ease-in-out"
-              : "iconFloat1 4s infinite ease-in-out",
-          }}>
-          {/* Pin with wrapper and link */}
-          <a
-            href="https://www.get-pins.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative block"
-            style={{
-              width: isMobile ? "90px" : "120px",
-              height: isMobile ? "90px" : "120px",
-            }}>
-            <img
-              src={redPinImage}
-              alt="Red Pin"
-              style={{
-                width: "100%",
-                height: "100%",
-                animation: "iconBreathe 3s infinite ease-in-out",
-              }}
-            />
-            {/* 00 Text - Counter-rotating to stay horizontal */}
-            <div
-              className="absolute"
-              style={{
-                top: isMobile ? "-5px" : "-10px",
-                right: isMobile ? "-15px" : "-20px",
-                transformOrigin: "center",
-              }}>
-              <span
-                className="text-white"
-                style={{
-                  fontSize: isMobile ? "12px" : "14px",
-                  fontWeight: "400",
-                  display: "inline-block",
-                  whiteSpace: "nowrap",
-                }}>
-                00
-              </span>
-            </div>
-          </a>
-        </div>
+
 
         {/* Mail - Bottom Right - Clickable */}
         <div
@@ -523,12 +473,12 @@ const CosmicPortfolio = () => {
           <div
             className="relative"
             style={{
-              width: isMobile ? "60px" : "100px",
-              height: isMobile ? "60px" : "100px",
+              width: isMobile ? "80px" : "140px",
+              height: isMobile ? "80px" : "140px",
             }}>
             <img
-              src={mailImage}
-              alt="Orbiting Mail"
+              src={circleImage}
+              alt="Orbiting Circle"
               style={{
                 width: "100%",
                 height: "100%",
@@ -573,15 +523,16 @@ const CosmicPortfolio = () => {
           <div
             className="relative"
             style={{
-              width: isMobile ? "100px" : "120px",
-              height: isMobile ? "100px" : "120px",
+              width: isMobile ? "120px" : "160px",
+              height: isMobile ? "120px" : "160px",
             }}>
             <img
-              src={tvImage}
-              alt="Orbiting 3D"
+              src={saturnImage}
+              alt="Orbiting Saturn"
               style={{
                 width: "100%",
                 height: "100%",
+                objectFit: "contain",
                 animation: "iconBreathe 4s infinite ease-in-out",
               }}
             />
@@ -624,12 +575,12 @@ const CosmicPortfolio = () => {
           <div
             className="relative"
             style={{
-              width: isMobile ? "110px" : "140px",
-              height: isMobile ? "110px" : "140px",
+              width: isMobile ? "130px" : "180px",
+              height: isMobile ? "130px" : "180px",
             }}>
             <img
-              src={filesImage}
-              alt="Orbiting Files"
+              src={spireImage}
+              alt="Orbiting Spire"
               style={{
                 width: "100%",
                 height: "100%",

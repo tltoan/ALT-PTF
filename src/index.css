@@ -290,16 +290,16 @@
 
 @keyframes iconFloat4 {
   0%, 100% {
-    transform: translate(-300px, -200px);
+    transform: translate(-70px, -300px);
   }
   25% {
-    transform: translate(-310px, -205px);
+    transform: translate(-75px, -305px);
   }
   50% {
-    transform: translate(-300px, -215px);
+    transform: translate(-70px, -310px);
   }
   75% {
-    transform: translate(-290px, -205px);
+    transform: translate(-65px, -305px);
   }
 }
 
@@ -339,31 +339,17 @@
 
 @keyframes iconFloat4Mobile {
   0%, 100% {
-    transform: translate(-120px, -310px);
+    transform: translate(-55px, -220px);
   }
   25% {
-    transform: translate(-125px, -315px);
+    transform: translate(-60px, -225px);
   }
   50% {
-    transform: translate(-120px, -320px);
+    transform: translate(-55px, -230px);
   }
   75% {
-    transform: translate(-115px, -315px);
+    transform: translate(-50px, -225px);
   }
 }
 
-/* Flower floating animation */
-@keyframes flowerFloat {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg) scale(1);
-  }
-  25% {
-    transform: translateY(-8px) rotate(5deg) scale(1.05);
-  }
-  50% {
-    transform: translateY(5px) rotate(-3deg) scale(1.02);
-  }
-  75% {
-    transform: translateY(-5px) rotate(-5deg) scale(1.03);
-  }
-}
+
