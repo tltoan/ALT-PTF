@@ -102,9 +102,9 @@ const TigerPage = () => {
                 to define is to limit. so i will tell you my inspiration, not my interpretations.
               </p>
               <p>
-                The tiger "con cop" in vietnamese culture is a symbol of strength and protection. 
-                It protects our shrines, our tombstone, and our gates. This tiger is to protect my bed, 
-                watching over me as i sleep. the extra elements are up for interpretations
+                The tiger "con cop" in Vietnamese culture is a symbol of strength and protection. 
+                It protects our shrines, our tombstones, and our gates. This tiger is to protect my bed, 
+                watching over me as I sleep. The extra elements are up for interpretation.
               </p>
             </div>
 
@@ -157,7 +157,7 @@ const TigerPage = () => {
 
             {/* Contact Footer */}
             <div className="text-right mt-auto pt-8">
-              <a href="mailto:contact@example.com" className="font-bold italic text-lg hover:underline inline-block">
+              <a href="mailto:antonyltran@gmail.com" className="font-bold italic text-lg hover:underline inline-block">
                 Contact for Original
               </a>
             </div>

@@ -18,7 +18,7 @@ interface CheckoutModalProps {
   total: number;
 }
 
-const CheckoutForm = ({ onClose, total, cart, onSuccess }: { onClose: () => void, total: number, cart: any[], onSuccess: (data: any) => void }) => {
+const CheckoutForm = ({ onClose, total, cart, onSuccess, clientSecret }: { onClose: () => void, total: number, cart: any[], onSuccess: (data: any) => void, clientSecret: string }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState<string | null>(null);
@@ -47,16 +47,17 @@ const CheckoutForm = ({ onClose, total, cart, onSuccess }: { onClose: () => void
     const cardElement = elements.getElement(CardElement);
 
     if (cardElement) {
-      const { error, paymentMethod } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: cardElement,
-        billing_details: {
-          name: formData.name,
-          email: formData.email,
-          address: {
-            line1: formData.address,
-            city: formData.city,
-            postal_code: formData.zip,
+      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: cardElement,
+          billing_details: {
+            name: formData.name,
+            email: formData.email,
+            address: {
+              line1: formData.address,
+              city: formData.city,
+              postal_code: formData.zip,
+            },
           },
         },
       });
@@ -64,16 +65,13 @@ const CheckoutForm = ({ onClose, total, cart, onSuccess }: { onClose: () => void
       if (error) {
         setError(error.message || 'An error occurred');
         setProcessing(false);
-      } else {
-        console.log('[PaymentMethod]', paymentMethod);
-        // Simulate backend processing delay
-        setTimeout(() => {
-            setProcessing(false);
-            onSuccess({
-                ...formData,
-                paymentMethodId: paymentMethod.id
-            });
-        }, 1500);
+      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        console.log('[PaymentIntent]', paymentIntent);
+        setProcessing(false);
+        onSuccess({
+            ...formData,
+            paymentId: paymentIntent.id
+        });
       }
     }
   };
@@ -334,6 +332,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, cart, to
                     total={total} 
                     cart={cart}
                     onSuccess={handleSuccess}
+                    clientSecret={clientSecret}
                 />
             </Elements>
           )}
