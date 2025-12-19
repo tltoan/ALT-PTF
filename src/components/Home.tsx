@@ -63,7 +63,7 @@ const Home = () => {
 
       {/* Footer */}
       <div className="absolute bottom-16 left-0 w-full flex justify-center z-10">
-        <div className="text-[#4F46E5] font-mono text-sm tracking-wide flex gap-4 md:gap-8">
+        <div className="text-[#4F46E5] font-mono text-sm tracking-wide flex flex-wrap justify-center gap-4 md:gap-8 px-4 text-center">
             <span>1. "con cop" (the tiger)</span>
             <span>2. make a pin</span>
             <span>3. anchor</span>
