@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY || process.env.VERCEL_STRIPE_KEY);
 
 const printOptions = [
     { size: '8x6', price: 35 },
