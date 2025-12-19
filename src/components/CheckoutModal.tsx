@@ -189,19 +189,44 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, cart, to
   const [isSuccess, setIsSuccess] = useState(false);
   const [customerEmail, setCustomerEmail] = useState('');
   const [clientSecret, setClientSecret] = useState('');
+  const [initError, setInitError] = useState<string | null>(null);
+  const [isInitializing, setIsInitializing] = useState(false);
 
   // Fetch PaymentIntent when modal opens
   React.useEffect(() => {
     if (isOpen && total > 0) {
-      // Create PaymentIntent as soon as the page loads
+      setIsInitializing(true);
+      setInitError(null);
+      
       // On Vercel, the /api directory is automatically routed
       fetch("/api/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items: cart }),
       })
-        .then((res) => res.json())
-        .then((data) => setClientSecret(data.clientSecret));
+        .then(async (res) => {
+           if (!res.ok) {
+             // Try to read error as JSON, fallback to text
+             const text = await res.text();
+             try {
+                 const json = JSON.parse(text);
+                 throw new Error(json.error || json.message || `Error ${res.status}`);
+             } catch(e) {
+                 throw new Error(`Server Error ${res.status}: ${text}`);
+             }
+           }
+           return res.json();
+        })
+        .then((data) => {
+            if (data.error) throw new Error(data.error);
+            if (!data.clientSecret) throw new Error("No client secret returned");
+            setClientSecret(data.clientSecret);
+        })
+        .catch(err => {
+            console.error("Checkout Init Error:", err);
+            setInitError(err.message);
+        })
+        .finally(() => setIsInitializing(false));
     }
   }, [isOpen, total, cart]);
 
@@ -284,6 +309,23 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, cart, to
               <span>${total}</span>
             </div>
           </div>
+          
+          {isInitializing && (
+             <div className="text-center py-8 text-gray-500">
+                <div className="animate-spin inline-block w-6 h-6 border-2 border-current border-t-transparent rounded-full mb-2"></div>
+                <p className="text-sm">Securing connection...</p>
+             </div>
+          )}
+
+          {initError && (
+             <div className="bg-red-50 border border-red-200 text-red-600 p-4 text-sm mb-4">
+                <strong>Checkout Error:</strong> {initError}
+                <p className="mt-2 text-xs text-gray-500">
+                    If you are on localhost, ensure you are running `vercel dev`. 
+                    If on Vercel, check STRIPE_SECRET_KEY in settings.
+                </p>
+             </div>
+          )}
 
           {clientSecret && (
             <Elements options={options} stripe={stripePromise}>
