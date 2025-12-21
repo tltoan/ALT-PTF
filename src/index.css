@@ -9,7 +9,7 @@
   }
   
   body {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'RM Mono', monospace;
     margin: 0;
     /* overflow: hidden; Removed to allow scrolling */
   }

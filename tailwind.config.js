@@ -20,7 +20,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['"RM Mono"', 'monospace', 'system-ui', 'sans-serif'],
+        serif: ['"RM Mono"', 'monospace', 'serif'],
+        mono: ['"RM Mono"', 'monospace', 'ui-monospace', 'SFMono-Regular'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
