@@ -142,8 +142,8 @@ const Home = () => {
 
 
         {/* Right Column: Trinkets (4 cols) */}
-        <div className="lg:col-span-4 flex flex-col items-center relative h-full lg:min-h-0 min-h-[300px]">
-          <h2 className="text-lg font-bold italic text-[#4F46E5] mb-4 font-mono self-start pl-8 lg:pl-0 pt-1">Current Trinkets</h2>
+        <div className="lg:col-span-4 flex flex-col relative h-full lg:min-h-0 min-h-[300px]">
+          <h2 className="text-lg font-bold italic text-[#4F46E5] mb-4 font-mono pt-1">Current Trinkets</h2>
           
           <div className="relative w-full flex-1 flex items-center justify-center">
             
