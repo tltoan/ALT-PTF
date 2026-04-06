@@ -12,12 +12,12 @@ const TigerPage = () => {
   const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
   
   const printOptions = [
-    { size: '8x6', price: 35 },
-    { size: '12x9', price: 45 },
-    { size: '16x12', price: 55 },
-    { size: '24x18', price: 65 },
-    { size: '32x24', price: 95 },
-    { size: '48x36', price: 135, note: '(original size)' },
+    { size: '8x6', price: 55 },
+    { size: '12x9', price: 70 },
+    { size: '16x12', price: 85 },
+    { size: '24x18', price: 100 },
+    { size: '32x24', price: 145 },
+    { size: '48x36', price: 205, note: '(original size)' },
   ];
 
   const handleQuantityChange = (size: string, value: string) => {
