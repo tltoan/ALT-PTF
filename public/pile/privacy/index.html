@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Pile</title>
+  <meta name="description" content="Pile's privacy policy. Everything happens on your iPhone — photos never leave your device, no accounts, no third-party tracking." />
+  <meta name="theme-color" content="#F2EEE6" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#15120E" media="(prefers-color-scheme: dark)" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="masthead">
+    <a class="wordmark" href="/pile/" style="border:none;">Pile</a>
+    <nav class="masthead-nav" aria-label="Primary">
+      <a href="/pile/">Home</a>
+      <a href="/pile/support/">Support</a>
+    </nav>
+  </header>
+
+  <main>
+    <article class="article">
+      <header class="article-header">
+        <span class="caps">Privacy</span>
+        <h1><em>Your photos<br/>stay on your phone.</em></h1>
+        <p class="updated">Last updated: 16 May 2026</p>
+      </header>
+
+      <p class="article-lede">
+        Pile is built on a single promise: your photos never leave your iPhone. This page explains exactly what that means, and what (very little) information is involved.
+      </p>
+
+      <h2>What we collect</h2>
+      <p><strong>Nothing, in almost every case.</strong> Pile does not require an account, does not ask for your email, and does not transmit your photos, metadata, or usage information off your device.</p>
+      <p>The only situation in which any personal data exists outside your phone is if you choose to email us at <a href="mailto:pilesupport@gmail.com">pilesupport@gmail.com</a> — in which case we receive your email address and whatever you write in the message.</p>
+
+      <h2>How we use your photo library</h2>
+      <p>To do its job, Pile needs Photo Library access (read and delete). With your permission, the app:</p>
+      <ul>
+        <li>Reads photos and videos from your library to display them and to detect look-alikes.</li>
+        <li>Runs Apple's on-device image-similarity frameworks (Vision, PhotoKit) to cluster duplicates, bursts, screenshots, and similar groups.</li>
+        <li>Marks photos for deletion when you swipe to trash them — these go to iOS's <em>Recently Deleted</em> album and remain recoverable for 30 days.</li>
+      </ul>
+      <p>All of this analysis happens locally on your device. No images, thumbnails, or derived data are uploaded to us or to any third party.</p>
+
+      <h2>Third-party services</h2>
+      <p>Pile contains <strong>no third-party analytics, advertising, or tracking SDKs</strong>. We do not embed Google Analytics, Facebook SDK, Firebase, Mixpanel, Sentry, or any equivalent.</p>
+      <p>The only Apple services used are:</p>
+      <ul>
+        <li><strong>PhotoKit / Vision</strong> — Apple's on-device frameworks for reading and analysing your library.</li>
+        <li><strong>StoreKit</strong> — for any in-app purchases, handled entirely by Apple. We never see your payment details.</li>
+        <li><strong>Apple's anonymous crash reporting</strong> — opt-in via iOS Settings &rsaquo; Privacy &amp; Security &rsaquo; Analytics &amp; Improvements. If you've enabled it system-wide, Apple may forward anonymised crash logs to developers; these contain no photos and no personally identifying information.</li>
+      </ul>
+
+      <h2>Data retention</h2>
+      <p>Because Pile doesn't collect data, there is nothing to retain. Support emails are kept only as long as needed to answer your question, and you can ask us to delete them at any time.</p>
+
+      <h2>Children's privacy</h2>
+      <p>Pile is not directed to children under 13 and does not knowingly collect any information from them. Because the app collects no information from anyone, this is true by design.</p>
+
+      <h2>Your rights (GDPR, CCPA, and similar laws)</h2>
+      <p>If you are in the EU, UK, California, or another region with comprehensive privacy laws, you have rights over your personal data — including the right to access it, correct it, delete it, and object to its processing.</p>
+      <p>Since Pile only ever processes data if you email us, exercising these rights is straightforward: write to <a href="mailto:pilesupport@gmail.com">pilesupport@gmail.com</a> and we'll act on any reasonable request within 30 days.</p>
+
+      <h2>Changes to this policy</h2>
+      <p>If we ever change how Pile handles data, we'll update this page and revise the <em>Last updated</em> date above. Material changes will also be noted in the app's release notes on the App Store.</p>
+
+      <h2>Contact</h2>
+      <p>For any privacy question, please write to <a href="mailto:pilesupport@gmail.com">pilesupport@gmail.com</a>.</p>
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-row">
+      <a class="wordmark" href="/pile/" style="border:none;">Pile</a>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/pile/privacy/">Privacy</a>
+        <a href="/pile/terms/">Terms</a>
+        <a href="/pile/support/">Support</a>
+      </nav>
+    </div>
+    <p class="footer-copy">© 2026 Antony Tran</p>
+  </footer>
+
+</body>
+</html>

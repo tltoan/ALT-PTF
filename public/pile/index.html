@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pile — A quieter way to clean your camera roll</title>
+  <meta name="description" content="Pile groups look-alike photos in your iPhone library so you can quickly keep the best shot and trash the rest. On-device only — your photos never leave your phone." />
+  <meta name="theme-color" content="#F2EEE6" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#15120E" media="(prefers-color-scheme: dark)" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Pile" />
+  <meta property="og:description" content="A quieter way to clean your camera roll." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.antonylt.com/pile" />
+
+  <!-- Fonts: Fraunces (display serif) + Inter (chrome) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="masthead">
+    <span class="wordmark">Pile</span>
+    <nav class="masthead-nav" aria-label="Primary">
+      <a href="/pile/privacy/">Privacy</a>
+      <a href="/pile/support/">Support</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="hero-text">
+        <span class="caps">An iPhone app</span>
+        <h1 class="display">
+          <em>A quieter way</em><br />
+          to clean your<br />
+          camera roll.
+        </h1>
+        <p class="lede">
+          Pile groups your look-alikes, shows what you'll free up, and lets you swipe through the noise.
+        </p>
+        <div class="hero-meta">
+          <!-- TODO: replace with Apple's official App Store badge SVG once approved -->
+          <a class="appstore-placeholder" href="#" aria-label="Download on the App Store (coming soon)">
+            <span class="caps">Coming soon to</span>
+            <span class="store">App&nbsp;Store</span>
+          </a>
+          <span class="caps" style="line-height:1.6;">
+            On-device&nbsp;·<br />No accounts&nbsp;·<br />No tracking
+          </span>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <!-- TODO: swap for art-directed hero shot if you have one -->
+        <img
+          src="screenshots/IMG_8555.PNG"
+          alt="Pile's Unsorted view showing a stack of duplicate photo cards waiting to be reviewed"
+          width="390"
+          height="844"
+          loading="eager"
+        />
+      </div>
+    </section>
+
+    <!-- The gesture legend — echoes the app's bottom bar -->
+    <div class="gesture-strip" role="presentation">
+      <span>← Trash</span>
+      <span>→ Keep</span>
+      <span>↑ Expand</span>
+      <span>↓ Move&nbsp;to&nbsp;album</span>
+    </div>
+
+    <!-- ===== Feature 01 ===== -->
+    <section class="feature feature--right">
+      <div class="feature-image">
+        <img
+          src="screenshots/IMG_8556.PNG"
+          alt="A single photo card in Pile's swipe-to-decide view"
+          width="390"
+          height="844"
+          loading="lazy"
+        />
+      </div>
+      <div class="feature-text">
+        <span class="caps">01 · Swipe to decide</span>
+        <h2 class="display-sm"><em>One photo. Four gestures.</em></h2>
+        <p>Trash. Keep. Expand. Move to album. No menus, no pinching, no nested toolbars — the grammar most fingers already know, applied to the camera roll you've been avoiding.</p>
+      </div>
+    </section>
+
+    <!-- ===== Feature 02 ===== -->
+    <section class="feature feature--left">
+      <div class="feature-text">
+        <span class="caps">02 · Smart look-alikes</span>
+        <h2 class="display-sm">
+          <em>Five duplicates of the same sunset.</em>
+          You only need one.
+        </h2>
+        <p>Pile clusters duplicates, bursts, screenshots, Live Photos, selfies, and full sessions — sorted on-device using Apple's image-similarity models. Pick the keeper. Trash the rest in seconds.</p>
+      </div>
+      <div class="feature-image">
+        <img
+          src="screenshots/IMG_8557.PNG"
+          alt="Pile's cluster category dropdown: Duplicates, Burst, Screenshots, Live Photos, Selfies, Session, Photo, By Month"
+          width="390"
+          height="844"
+          loading="lazy"
+        />
+      </div>
+    </section>
+
+    <!-- ===== Feature 03 ===== -->
+    <section class="feature feature--right">
+      <div class="feature-image">
+        <img
+          src="screenshots/IMG_8554.PNG"
+          alt="Pile's Albums view, showing albums you've already organized"
+          width="390"
+          height="844"
+          loading="lazy"
+        />
+      </div>
+      <div class="feature-text">
+        <span class="caps">03 · Already sorted</span>
+        <h2 class="display-sm"><em>The work you've already done<br />stays done.</em></h2>
+        <p>Pile reads the albums you've already organized and only asks about the photos you haven't decided on. It doesn't reshuffle, doesn't reorganize, doesn't suggest. It just clears what's left.</p>
+      </div>
+    </section>
+
+    <!-- ===== Privacy ===== -->
+    <section class="privacy">
+      <span class="caps">Privacy first</span>
+      <h2 class="display"><em>Your photos<br />never leave<br />your phone.</em></h2>
+      <ul class="privacy-list">
+        <li><span class="num">01</span><span>Everything happens on-device, with Apple's own frameworks. No uploads. Ever.</span></li>
+        <li><span class="num">02</span><span>No accounts. No emails. No third-party analytics or advertising SDKs.</span></li>
+        <li><span class="num">03</span><span>Crash reports use Apple's anonymous system — opt-in via iOS Settings.</span></li>
+        <li><span class="num">04</span><span>Deleted photos go to Recently Deleted, recoverable for 30 days.</span></li>
+      </ul>
+      <a class="quiet-link" href="/pile/privacy/">Read the full privacy policy →</a>
+    </section>
+
+    <!-- ===== Made by ===== -->
+    <section class="made-by">
+      <span class="caps">Made by</span>
+      <h3 class="display-sm"><em>Antony Tran</em></h3>
+      <p class="body">An independent designer and developer. Pile is part of a small set of tools I'm building for slower, quieter computing.</p>
+      <a class="quiet-link" href="https://www.antonylt.com">antonylt.com →</a>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-row">
+      <span class="wordmark">Pile</span>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/pile/privacy/">Privacy</a>
+        <a href="/pile/terms/">Terms</a>
+        <a href="/pile/support/">Support</a>
+      </nav>
+    </div>
+    <p class="footer-copy">© 2026 Antony Tran</p>
+  </footer>
+
+</body>
+</html>

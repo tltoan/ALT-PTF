@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support — Pile</title>
+  <meta name="description" content="Get help with Pile. Email support and answers to common questions about privacy, deletion, and iCloud Photos." />
+  <meta name="theme-color" content="#F2EEE6" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#15120E" media="(prefers-color-scheme: dark)" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <header class="masthead">
+    <a class="wordmark" href="/pile/" style="border:none;">Pile</a>
+    <nav class="masthead-nav" aria-label="Primary">
+      <a href="/pile/">Home</a>
+      <a href="/pile/privacy/">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <article class="article">
+      <header class="article-header">
+        <span class="caps">Support</span>
+        <h1><em>Need a hand?</em></h1>
+        <p class="updated">Average reply time: within 2 business days.</p>
+      </header>
+
+      <p class="article-lede">
+        Email is the best way to reach me. Real human, not a ticket system. Please include your iPhone model and iOS version if you're reporting a bug.
+      </p>
+
+      <a class="email-button" href="mailto:pilesupport@gmail.com?subject=Pile%20support">
+        <span class="caps">Write to</span>
+        pilesupport@gmail.com
+      </a>
+
+      <h2>Frequently asked</h2>
+
+      <ol class="faq">
+        <li>
+          <p class="q"><em>Do my photos get uploaded anywhere?</em></p>
+          <p class="a">No. Everything happens on your iPhone — photos, similarity analysis, deletion decisions. Nothing leaves the device. (See the <a href="/pile/privacy/">privacy policy</a> for the long version.)</p>
+        </li>
+
+        <li>
+          <p class="q"><em>Will Pile delete my photos permanently?</em></p>
+          <p class="a">No. When you swipe to trash a photo, Pile sends it to iOS's <em>Recently Deleted</em> album, where it stays recoverable for 30 days before iOS removes it for good. You can restore anything from <em>Photos &rsaquo; Albums &rsaquo; Recently Deleted</em> if you change your mind.</p>
+        </li>
+
+        <li>
+          <p class="q"><em>Why does Pile need access to my photos?</em></p>
+          <p class="a">To do its job. Pile needs read access to show you photos and detect look-alikes, and delete access to actually move them to Recently Deleted when you swipe. iOS makes these permissions visible and revocable in Settings &rsaquo; Privacy &amp; Security &rsaquo; Photos.</p>
+        </li>
+
+        <li>
+          <p class="q"><em>Does Pile work with iCloud Photos?</em></p>
+          <p class="a">Yes. Pile reads through PhotoKit, the same framework Apple's own Photos app uses, so it sees your iCloud Photos library the same way. Deletions sync across your devices through iCloud as you'd expect.</p>
+        </li>
+
+        <li>
+          <p class="q"><em>How does the duplicate detection work?</em></p>
+          <p class="a">On-device machine learning. Pile uses Apple's Vision framework to compare image features locally — no cloud, no upload, no server. The same approach the Photos app uses for its <em>Duplicates</em> view, applied more aggressively across burst shots, similar compositions, and screenshot groups.</p>
+        </li>
+      </ol>
+
+      <h2>Still stuck?</h2>
+      <p>Send a note to <a href="mailto:pilesupport@gmail.com">pilesupport@gmail.com</a> and I'll get back to you.</p>
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-row">
+      <a class="wordmark" href="/pile/" style="border:none;">Pile</a>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/pile/privacy/">Privacy</a>
+        <a href="/pile/terms/">Terms</a>
+        <a href="/pile/support/">Support</a>
+      </nav>
+    </div>
+    <p class="footer-copy">© 2026 Antony Tran</p>
+  </footer>
+
+</body>
+</html>

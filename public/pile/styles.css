@@ -1,0 +1,553 @@
+/* ============================================================
+   Pile — design system
+   Editorial · warm · tactile · quiet
+   ============================================================ */
+
+:root {
+  /* Surfaces */
+  --bg:        #F2EEE6;   /* warm cream paper */
+  --bg-elev:   #F8F5EE;   /* a half-shade lighter */
+  --bg-deep:   #ECE7DD;   /* slight recess */
+
+  /* Ink */
+  --ink:       #1F1A15;   /* warm near-black */
+  --ink-2:     #6E665C;   /* secondary, warm gray */
+  --ink-3:     #A8A095;   /* tertiary / hint */
+  --rule:      #E2DCCF;   /* hairline */
+
+  /* Shadow — warm, soft, never blue */
+  --shadow-lg: 0 36px 90px -28px rgba(60, 44, 28, 0.22),
+               0 8px 24px -12px rgba(60, 44, 28, 0.10);
+  --shadow-md: 0 14px 40px -16px rgba(60, 44, 28, 0.18);
+
+  /* Type families */
+  --serif: 'Fraunces', 'Iowan Old Style', 'Times New Roman', Georgia, serif;
+  --sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+  /* Geometry */
+  --rad-lg:    34px;
+  --rad-md:    16px;
+  --rad-sm:    8px;
+  --pad:       clamp(22px, 5.5vw, 88px);
+  --gap-sec:   clamp(80px, 13vw, 180px);
+  --max:       1280px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:        #15120E;
+    --bg-elev:   #1C1814;
+    --bg-deep:   #100D0A;
+    --ink:       #ECE6DA;
+    --ink-2:     #8B8275;
+    --ink-3:     #565049;
+    --rule:      #2A2520;
+    --shadow-lg: 0 36px 90px -28px rgba(0, 0, 0, 0.7),
+                 0 8px 24px -12px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 14px 40px -16px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ---------- Reset / base ---------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.65;
+  font-feature-settings: "ss01", "ss02", "kern";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg { display: block; max-width: 100%; height: auto; }
+
+a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+  transition: border-color 200ms ease, color 200ms ease;
+}
+a:hover { border-bottom-color: var(--ink); }
+a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+/* ---------- Type system ---------- */
+
+.display {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(40px, 7vw, 80px);
+  line-height: 1.04;
+  letter-spacing: -0.018em;
+  margin: 0;
+}
+.display em { font-style: italic; font-weight: 400; }
+
+.display-sm {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(28px, 4.4vw, 46px);
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+  margin: 0;
+}
+.display-sm em { font-style: italic; font-weight: 400; }
+
+.lede {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(19px, 1.8vw, 22px);
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 28px 0 36px;
+  max-width: 32ch;
+}
+
+.body {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 38ch;
+}
+
+.caps {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Quiet inline link */
+.quiet-link {
+  display: inline-block;
+  margin-top: 28px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 19px;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink-3);
+}
+.quiet-link:hover { border-bottom-color: var(--ink); }
+
+/* ---------- Masthead ---------- */
+
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px var(--pad) 0;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.wordmark {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.masthead-nav, .footer-nav {
+  display: flex;
+  gap: 28px;
+}
+.masthead-nav a, .footer-nav a {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-2);
+  border-bottom: none;
+}
+.masthead-nav a:hover, .footer-nav a:hover { color: var(--ink); }
+
+/* ---------- Hero ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(40px, 5vw, 80px);
+  align-items: center;
+  padding: clamp(60px, 9vw, 130px) var(--pad) clamp(40px, 6vw, 80px);
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.hero-text { max-width: 30ch; }
+
+.hero-text .caps { margin-bottom: 20px; display: block; }
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+/* App Store badge — clearly a placeholder until you swap in Apple's SVG */
+.appstore-placeholder {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12px 22px;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 12px;
+  border: none;
+  line-height: 1.1;
+  min-width: 168px;
+}
+.appstore-placeholder .caps {
+  font-size: 9.5px;
+  color: var(--bg);
+  opacity: 0.65;
+  letter-spacing: 0.22em;
+}
+.appstore-placeholder .store {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 21px;
+  margin-top: 3px;
+}
+.appstore-placeholder:hover { opacity: 0.88; }
+
+.hero-image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-image img {
+  border-radius: var(--rad-lg);
+  box-shadow: var(--shadow-lg);
+  max-height: 760px;
+  width: auto;
+  background: var(--bg-elev);
+}
+
+/* The gesture legend — echoes the app's bottom bar */
+.gesture-strip {
+  margin-top: clamp(40px, 6vw, 80px);
+  padding: 18px var(--pad);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  justify-content: center;
+  gap: clamp(16px, 3vw, 40px);
+  flex-wrap: wrap;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ---------- Feature sections ---------- */
+
+.feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 100px);
+  align-items: center;
+  padding: var(--gap-sec) var(--pad);
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.feature--left .feature-text  { order: 1; }
+.feature--left .feature-image { order: 2; }
+.feature--right .feature-image { order: 1; }
+.feature--right .feature-text  { order: 2; }
+
+.feature-text     { max-width: 38ch; }
+.feature-text .caps { display: block; margin-bottom: 18px; }
+.feature-text p   { color: var(--ink-2); margin: 22px 0 0; }
+
+.feature-image img {
+  border-radius: var(--rad-lg);
+  box-shadow: var(--shadow-lg);
+  max-height: 700px;
+  width: auto;
+  margin: 0 auto;
+  background: var(--bg-elev);
+}
+
+/* ---------- Privacy callout ---------- */
+
+.privacy {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--gap-sec) var(--pad);
+}
+
+.privacy .caps { display: block; margin-bottom: 18px; }
+.privacy .display { margin-bottom: 44px; max-width: 18ch; }
+
+.privacy-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.privacy-list li {
+  padding: 22px 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-2);
+  font-size: 17px;
+  display: flex;
+  gap: 24px;
+}
+
+.privacy-list .num {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--ink-3);
+  flex-shrink: 0;
+  min-width: 28px;
+}
+
+/* ---------- Made by ---------- */
+
+.made-by {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--gap-sec) var(--pad);
+}
+.made-by .caps { display: block; margin-bottom: 14px; }
+.made-by p { color: var(--ink-2); margin: 22px 0 0; max-width: 50ch; }
+
+/* ---------- Footer ---------- */
+
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 44px var(--pad);
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.footer-copy {
+  color: var(--ink-3);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-family: var(--sans);
+  font-weight: 500;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+  .hero,
+  .feature {
+    grid-template-columns: 1fr;
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .hero { padding-top: 32px; }
+
+  .hero-text, .feature-text { max-width: none; }
+
+  .feature--left .feature-text,
+  .feature--right .feature-text { order: 2; }
+  .feature--left .feature-image,
+  .feature--right .feature-image { order: 1; }
+
+  .hero-image img,
+  .feature-image img {
+    max-height: 560px;
+    margin: 0 auto;
+  }
+
+  .privacy,
+  .made-by { padding: 80px var(--pad); }
+}
+
+@media (max-width: 540px) {
+  .masthead, .footer-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .hero-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+}
+
+/* ---------- Motion preferences ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+/* ============================================================
+   Long-form article pages — Privacy, Terms, Support
+   ============================================================ */
+
+.article {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: clamp(60px, 9vw, 120px) var(--pad) clamp(80px, 12vw, 160px);
+}
+
+.article-header {
+  margin-bottom: clamp(48px, 7vw, 88px);
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.article-header .caps {
+  display: block;
+  margin-bottom: 22px;
+}
+
+.article-header h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(36px, 5.5vw, 60px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin: 0 0 24px;
+}
+.article-header h1 em { font-style: italic; font-weight: 400; }
+
+.article-header .updated {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink-3);
+  margin: 0;
+}
+
+.article h2 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(22px, 2.6vw, 28px);
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  margin: 56px 0 18px;
+  color: var(--ink);
+}
+
+.article p,
+.article li {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 17.5px;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+.article p { margin: 0 0 20px; }
+
+.article ul, .article ol {
+  padding-left: 1.4em;
+  margin: 0 0 24px;
+}
+.article li { margin-bottom: 10px; }
+.article ul li::marker { color: var(--ink-3); }
+.article ol li::marker { font-style: italic; color: var(--ink-3); }
+
+.article strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.article a {
+  color: var(--ink);
+  border-bottom-color: var(--ink-3);
+  font-style: italic;
+}
+.article a:hover { border-bottom-color: var(--ink); }
+
+/* Lede paragraph under article title */
+.article .article-lede {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(19px, 2vw, 22px);
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 0 0 24px;
+}
+
+/* FAQ block */
+.faq {
+  list-style: none;
+  padding: 0;
+  margin: 40px 0 0;
+  border-top: 1px solid var(--rule);
+}
+.faq > li {
+  border-bottom: 1px solid var(--rule);
+  padding: 26px 0;
+}
+.faq .q {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 21px;
+  line-height: 1.35;
+  margin: 0 0 12px;
+  color: var(--ink);
+  font-weight: 400;
+}
+.faq .a {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+/* Primary email button — quiet but findable */
+.email-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 16px 28px;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 12px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 19px;
+  border: none;
+  transition: opacity 200ms ease;
+}
+.email-button:hover { opacity: 0.88; border-color: transparent; }
+.email-button .caps {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--bg);
+  opacity: 0.65;
+  font-style: normal;
+}
