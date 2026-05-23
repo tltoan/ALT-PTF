@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VeriChain · Prototype</title>
+
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; background: #0F1A14; overflow: hidden; }
+    body { font-family: 'Geist', system-ui, sans-serif; color: #fff; }
+
+    /* Stage scales the 1440-wide screen to fit the viewport */
+    .vc-stage-wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #15201A; }
+    .vc-stage { background: #FAFAF8; width: 1440px; height: 900px; transform-origin: center center; box-shadow: 0 24px 80px rgba(0,0,0,.35); position: relative; overflow: hidden; border-radius: 6px; }
+    .vc-stage--tall { height: auto; min-height: 900px; max-height: 1080px; overflow: auto; }
+
+    /* Chrome */
+    .vc-chrome {
+      position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(15, 26, 20, .82); backdrop-filter: blur(14px);
+      color: #fff; border-radius: 999px; padding: 6px 6px 6px 14px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.35); z-index: 100;
+      font-size: 12.5px; font-weight: 500;
+    }
+    .vc-chrome__brand { display: inline-flex; align-items: center; gap: 8px; padding-right: 10px; border-right: 1px solid rgba(255,255,255,.15); }
+    .vc-chrome__step { padding: 0 12px; color: rgba(255,255,255,.78); display: inline-flex; align-items: center; gap: 6px; }
+    .vc-chrome__step b { color: #fff; font-weight: 500; }
+    .vc-chrome__pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 10px 5px 8px; border-radius: 999px;
+      background: rgba(255,255,255,.08); color: rgba(255,255,255,.85);
+      font-size: 11.5px; font-weight: 500;
+    }
+    .vc-chrome__pill svg { opacity: .8; }
+    .vc-chrome__btn {
+      background: transparent; color: #fff; border: none; cursor: pointer;
+      font-family: inherit; font-size: 12.5px; font-weight: 500;
+      padding: 5px 10px; border-radius: 999px;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background .12s;
+    }
+    .vc-chrome__btn:hover { background: rgba(255,255,255,.1); }
+    .vc-chrome__btn--primary { background: var(--vc-accent); padding: 6px 12px; }
+    .vc-chrome__btn--primary:hover { background: var(--vc-accent-hi); }
+    .vc-chrome__divider { width: 1px; height: 16px; background: rgba(255,255,255,.15); margin: 0 2px; }
+
+    /* Screen list dropdown */
+    .vc-menu { position: relative; }
+    .vc-menu__pop {
+      position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+      background: #1F2A23; border-radius: 12px; padding: 6px; min-width: 320px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.08);
+    }
+    .vc-menu__group { padding: 8px 10px 4px; font-size: 10.5px; color: rgba(255,255,255,.45); text-transform: uppercase; letter-spacing: .08em; }
+    .vc-menu__item {
+      display: flex; align-items: center; gap: 10px;
+      width: 100%; padding: 8px 10px; background: transparent; border: none; cursor: pointer;
+      color: rgba(255,255,255,.85); font-family: inherit; font-size: 13px; text-align: left;
+      border-radius: 6px;
+    }
+    .vc-menu__item:hover { background: rgba(255,255,255,.06); color: #fff; }
+    .vc-menu__item--active { background: rgba(31, 138, 90, .18); color: #fff; }
+    .vc-menu__index { font-family: 'Geist Mono', monospace; font-size: 10.5px; color: rgba(255,255,255,.45); width: 22px; }
+    .vc-menu__hot { margin-left: auto; font-family: 'Geist Mono', monospace; font-size: 10.5px; padding: 1px 6px; background: rgba(255,255,255,.06); border-radius: 4px; color: rgba(255,255,255,.55); }
+
+    /* Help hint */
+    .vc-hint {
+      position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
+      font-size: 11.5px; color: rgba(255,255,255,.45);
+      display: inline-flex; gap: 10px; z-index: 100;
+    }
+    .vc-hint kbd { font-family: 'Geist Mono', monospace; padding: 1px 5px; background: rgba(255,255,255,.08); border-radius: 3px; color: rgba(255,255,255,.7); font-size: 10.5px; }
+
+    /* Tiny "Back" pill (links back to portfolio root) */
+    .vc-back {
+      position: fixed; top: 12px; left: 14px;
+      background: rgba(255,255,255,.06); color: rgba(255,255,255,.7);
+      border: 1px solid rgba(255,255,255,.1); border-radius: 6px;
+      padding: 5px 9px; font-size: 11.5px;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 5px;
+      z-index: 100;
+      transition: background .12s, color .12s;
+    }
+    .vc-back:hover { background: rgba(255,255,255,.12); color: #fff; }
+  </style>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="vc-back" href="/" title="Back to portfolio">← Portfolio</a>
+  <div id="root"></div>
+
+  <script src="vc-data.js"></script>
+  <script type="text/babel" src="vc-components.jsx"></script>
+  <script type="text/babel" src="screens/style-guide.jsx"></script>
+  <script type="text/babel" src="screens/components.jsx"></script>
+  <script type="text/babel" src="screens/student-onboarding.jsx"></script>
+  <script type="text/babel" src="screens/student-workspace.jsx"></script>
+  <script type="text/babel" src="screens/student-submitted.jsx"></script>
+  <script type="text/babel" src="screens/lecturer-list.jsx"></script>
+  <script type="text/babel" src="screens/lecturer-review.jsx"></script>
+  <script type="text/babel" src="screens/lecturer-setup.jsx"></script>
+  <script type="text/babel" src="screens/privacy.jsx"></script>
+
+  <script type="text/babel" data-presets="env,react">
+    const { useState, useEffect, useRef } = React;
+    const { BrandMark, Icon } = window.VC_UI;
+
+    // Route definitions
+    const ROUTES = [
+      { id: 'onboarding',                 label: 'Start',                 group: 'Student',   persona: 'student',  step: '01' },
+      { id: 'workspace',                  label: 'Workspace',             group: 'Student',   persona: 'student',  step: '02' },
+      { id: 'submitted',                  label: 'Submission confirmed',  group: 'Student',   persona: 'student',  step: '03' },
+      { id: 'lecturer-list',              label: 'Submission list',       group: 'Lecturer',  persona: 'lecturer', step: '04' },
+      { id: 'lecturer-review-clean',      label: 'Review · clean',        group: 'Lecturer',  persona: 'lecturer', step: '05' },
+      { id: 'lecturer-review-discrepancy',label: 'Review · discrepancy',  group: 'Lecturer',  persona: 'lecturer', step: '05' },
+      { id: 'lecturer-setup',             label: 'Assignment setup',      group: 'Lecturer',  persona: 'lecturer', step: '06' },
+      { id: 'privacy',                    label: 'Privacy / docs',        group: 'Shared',    persona: 'shared',   step: '07' },
+    ];
+    const ROUTE_BY_ID = Object.fromEntries(ROUTES.map(r => [r.id, r]));
+
+    function getRouteFromHash() {
+      const h = (location.hash || '').replace(/^#/, '');
+      return ROUTE_BY_ID[h] ? h : 'onboarding';
+    }
+
+    // Stage scaling — fit 1440×900 to viewport
+    function useStageScale(stageW = 1440, stageH = 900) {
+      const [scale, setScale] = useState(1);
+      useEffect(() => {
+        const compute = () => {
+          const padding = 80;
+          const sx = (window.innerWidth - padding * 2) / stageW;
+          const sy = (window.innerHeight - padding * 2) / stageH;
+          setScale(Math.min(1, sx, sy));
+        };
+        compute();
+        window.addEventListener('resize', compute);
+        return () => window.removeEventListener('resize', compute);
+      }, [stageW, stageH]);
+      return scale;
+    }
+
+    function App() {
+      const [route, setRoute] = useState(getRouteFromHash);
+      const [history, setHistory] = useState([getRouteFromHash()]);
+      const [menuOpen, setMenuOpen] = useState(false);
+
+      // Register the navigation function for screens
+      useEffect(() => {
+        window.vcNav = (r) => {
+          if (!ROUTE_BY_ID[r]) return;
+          location.hash = '#' + r;
+        };
+        const onHash = () => {
+          const r = getRouteFromHash();
+          setRoute(r);
+          setHistory(h => h[h.length - 1] === r ? h : [...h, r].slice(-20));
+        };
+        window.addEventListener('hashchange', onHash);
+        return () => { window.removeEventListener('hashchange', onHash); };
+      }, []);
+
+      // Keyboard shortcuts
+      useEffect(() => {
+        const onKey = (e) => {
+          if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable)) return;
+          // Number 1-8: jump to route
+          const n = parseInt(e.key, 10);
+          if (n >= 1 && n <= ROUTES.length) {
+            e.preventDefault(); window.vcNav(ROUTES[n - 1].id);
+          }
+          if (e.key === 'Escape') setMenuOpen(false);
+          if ((e.key === '[' || e.key === 'ArrowLeft') && e.metaKey) { e.preventDefault(); history.length > 1 && window.vcNav(history[history.length - 2]); }
+        };
+        document.addEventListener('keydown', onKey);
+        return () => document.removeEventListener('keydown', onKey);
+      }, [history]);
+
+      const def = ROUTE_BY_ID[route];
+      const isTall = route === 'privacy';
+      const stageH = isTall ? Math.min(1080, window.innerHeight - 160) : 900;
+      const scale = useStageScale(1440, stageH);
+
+      return (
+        <>
+          {/* Chrome */}
+          <Chrome
+            route={route} routeDef={def}
+            onNav={(r) => window.vcNav(r)}
+            menuOpen={menuOpen}
+            setMenuOpen={setMenuOpen}
+          />
+
+          {/* Stage */}
+          <div className="vc-stage-wrap">
+            <div className={"vc-stage" + (isTall ? ' vc-stage--tall' : '')} style={{ transform: `scale(${scale})`, height: stageH }}>
+              <ScreenRouter route={route} />
+            </div>
+          </div>
+
+          {/* Hint */}
+          <div className="vc-hint">
+            <span><kbd>1</kbd>–<kbd>8</kbd> jump to screen</span>
+            <span><kbd>⌘</kbd>+<kbd>←</kbd> back</span>
+            <span><kbd>Esc</kbd> close menu</span>
+          </div>
+        </>
+      );
+    }
+
+    function ScreenRouter({ route }) {
+      switch (route) {
+        case 'onboarding':                  return <window.VCStudentOnboarding height={900} />;
+        case 'workspace':                   return <window.VCStudentWorkspace state="mid" height={900} />;
+        case 'submitted':                   return <window.VCStudentSubmitted height={900} />;
+        case 'lecturer-list':               return <window.VCLecturerList height={900} />;
+        case 'lecturer-review-clean':       return <window.VCLecturerReview state="clean" height={900} />;
+        case 'lecturer-review-discrepancy': return <window.VCLecturerReview state="discrepancy" height={900} />;
+        case 'lecturer-setup':              return <window.VCLecturerSetup height={900} />;
+        case 'privacy':                     return <window.VCPrivacy height={1080} />;
+        default:                            return <window.VCStudentOnboarding height={900} />;
+      }
+    }
+
+    function Chrome({ route, routeDef, onNav, menuOpen, setMenuOpen }) {
+      const menuRef = useRef(null);
+      useEffect(() => {
+        if (!menuOpen) return;
+        const onDown = (e) => { if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(false); };
+        document.addEventListener('pointerdown', onDown);
+        return () => document.removeEventListener('pointerdown', onDown);
+      }, [menuOpen]);
+
+      const persona = routeDef.persona;
+      const personaInfo = persona === 'student'
+        ? { label: 'Student', color: '#A8E5C5', dot: '#1F8A5A' }
+        : persona === 'lecturer'
+        ? { label: 'Lecturer', color: '#C5D1FF', dot: '#3E51B5' }
+        : { label: 'Shared',   color: 'rgba(255,255,255,.7)', dot: '#888' };
+
+      return (
+        <div className="vc-chrome">
+          <span className="vc-chrome__brand">
+            <BrandMark size={14} color="#fff" />
+            <span style={{ fontFamily: 'Fraunces, serif', fontSize: 14, fontWeight: 500 }}>VeriChain</span>
+          </span>
+          <span className="vc-chrome__pill" style={{ color: personaInfo.color }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: personaInfo.dot }} />
+            {personaInfo.label}
+          </span>
+          <span className="vc-chrome__step">
+            <span style={{ fontFamily: 'Geist Mono, monospace', fontSize: 11, color: 'rgba(255,255,255,.5)' }}>{routeDef.step}</span>
+            <b>{routeDef.label}</b>
+          </span>
+
+          <span className="vc-chrome__divider" />
+
+          <div className="vc-menu" ref={menuRef}>
+            <button className="vc-chrome__btn" onClick={() => setMenuOpen(o => !o)}>
+              All screens
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M2 3.5L5 6.5l3-3"/></svg>
+            </button>
+            {menuOpen && (
+              <div className="vc-menu__pop" onClick={(e) => e.stopPropagation()}>
+                {['Student', 'Lecturer', 'Shared'].map(grp => {
+                  const items = ROUTES.filter(r => r.group === grp);
+                  if (!items.length) return null;
+                  return (
+                    <div key={grp}>
+                      <div className="vc-menu__group">{grp}</div>
+                      {items.map((r, i) => {
+                        const idx = ROUTES.findIndex(x => x.id === r.id);
+                        return (
+                          <button key={r.id}
+                            className={"vc-menu__item" + (r.id === route ? ' vc-menu__item--active' : '')}
+                            onClick={() => { setMenuOpen(false); onNav(r.id); }}>
+                            <span className="vc-menu__index">{r.step}</span>
+                            <span>{r.label}</span>
+                            <span className="vc-menu__hot">{idx + 1}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          <span className="vc-chrome__divider" />
+          <button className="vc-chrome__btn"
+            onClick={() => onNav(routeDef.persona === 'student' ? 'lecturer-list' : 'onboarding')}>
+            Switch to {routeDef.persona === 'student' ? 'Lecturer' : 'Student'} view
+          </button>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
