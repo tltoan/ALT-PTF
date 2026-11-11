@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Paintings &amp; Prints | Antony L. Tran</title>
   <link rel="stylesheet" href="./figma-portfolio.css">
+  <script>document.documentElement.classList.add("gallery-initializing");</script>
 </head>
 <body class="arts">
 <header class="site-header">
@@ -79,6 +80,6 @@
     </div>
   </section>
 </main>
-<script src="./gallery.js" defer></script>
+<script src="./gallery.js" defer onerror="document.documentElement.classList.remove('gallery-initializing')"></script>
 </body>
 </html>

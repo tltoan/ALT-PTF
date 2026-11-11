@@ -80,9 +80,21 @@ controls.forEach((button) => {
   button.addEventListener("click", () => goTo(selected + Number(button.dataset.step)));
 });
 
-centerStudy(featured, "instant");
-updateStrip();
-window.addEventListener("resize", () => {
+function initializeStrip() {
+  centerStudy(featured, "instant");
+  updateStrip();
+  document.documentElement.classList.remove("gallery-initializing");
+}
+
+initializeStrip();
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) initializeStrip();
+});
+
+let stripWidth = strip.clientWidth;
+new ResizeObserver(() => {
+  if (strip.clientWidth === stripWidth) return;
+  stripWidth = strip.clientWidth;
   centerStudy(selected, "instant");
   updateStrip();
-});
+}).observe(strip);
