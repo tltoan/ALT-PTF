@@ -4,6 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Home | Antony L. Tran</title>
+  <style>
+    body.home { margin: 0; min-height: 100svh; }
+    .portrait {
+      position: absolute;
+      top: 50vh;
+      top: 50svh;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(35.714vw, 540px);
+      aspect-ratio: 1086 / 724;
+    }
+    .portrait > img { display: block; width: 100%; height: auto; }
+    .signature { position: absolute; left: -12.5%; top: 46.39%; width: 125%; height: auto; }
+    .signature-initializing .signature-fallback { visibility: hidden; }
+    @media (max-width: 640px) { .portrait { width: 68vw; } }
+  </style>
   <link rel="stylesheet" href="./figma-portfolio.css">
   <script>document.documentElement.classList.add("signature-initializing");</script>
 </head>
