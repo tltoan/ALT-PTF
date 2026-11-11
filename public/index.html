@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Home | Antony L. Tran</title>
   <link rel="stylesheet" href="./figma-portfolio.css">
+  <script>document.documentElement.classList.add("signature-initializing");</script>
 </head>
 <body class="home">
 <header class="site-header">
@@ -12,7 +13,7 @@
   <nav aria-label="Main"><a href="./arts.html">works</a><a href="./fun.html">fun</a></nav>
 </header>
 <main class="portrait">
-  <img src="./portrait-figma.jpeg" alt="Antony posing with a black dog" width="1086" height="724">
+  <img src="./portrait-figma.jpeg" alt="Antony posing with a black dog" width="1086" height="724" fetchpriority="high">
   <svg class="signature" viewBox="0 0 925 320" role="img" aria-label="Antony’s blue signature">
     <defs>
       <path id="signature-trace" pathLength="1" transform="matrix(0 -1 1 0 -420 975)" d="
@@ -47,6 +48,6 @@
     </g>
   </svg>
 </main>
-<script src="./signature.js" defer></script>
+<script src="./signature.js" defer onerror="document.documentElement.classList.remove('signature-initializing')"></script>
 </body>
 </html>

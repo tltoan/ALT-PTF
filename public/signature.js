@@ -48,11 +48,12 @@ function draw(progress) {
   ink.setAttribute("d", prefixes[index] + tip);
 }
 
+fallback.remove();
+document.documentElement.classList.remove("signature-initializing");
+
 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   draw(1);
-  fallback.remove();
 } else {
-  fallback.remove();
   requestAnimationFrame(function start(now) {
     function animate(time) {
       const elapsed = Math.min((time - now) / 2700, 1);

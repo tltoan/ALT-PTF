@@ -33,7 +33,9 @@ a:hover { text-decoration: underline; }
 .site-header .name { color: var(--secondary-text-color); font-family: Geist Serif, Georgia, serif; }
 .site-header nav { display: flex; gap: clamp(12px, 1.39vw, 21px); color: var(--secondary-text-color); }
 .home, .fun { display: grid; place-items: center; }
-.portrait { position: relative; width: min(35.714vw, 540px); }
+.home { grid-template-rows: minmax(0, 1fr); height: 100svh; }
+.signature-initializing .signature-fallback { visibility: hidden; }
+.portrait { position: relative; width: min(35.714vw, 540px); aspect-ratio: 1086 / 724; }
 .portrait > img:first-child { display: block; width: 100%; height: auto; }
 .signature { position: absolute; left: -12.5%; top: 46.39%; width: 125%; height: auto; }
 .signature-fallback {
