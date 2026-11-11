@@ -1,0 +1,63 @@
+@import url("./palette.css");
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+.home { position: absolute; top: 22px; left: 22px; display: grid; width: 44px; height: 44px; place-items: center; }
+.portrait-wrap { position: relative; width: min(540px, 76vw); }
+.portrait { display: block; width: 100%; height: auto; }
+.signature {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  width: 125%;
+  transform: translate(-50%, -50%);
+  fill: none;
+  stroke: #145dff;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+  pointer-events: none;
+}
+.signature path { stroke-dasharray: 1; animation: sign 2s linear both; }
+.signature .ink-grain { stroke-width: 7; opacity: .67; filter: url(#brush-grain); }
+@keyframes sign { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .signature path { animation: none; } }
+.label { position: absolute; inset-inline: 0; display: flex; justify-content: center; }
+.label.works { bottom: calc(100% + 68px); }
+.label.contact { top: calc(100% + 68px); }
+.label svg, nav svg, h1 svg {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  fill: none;
+  stroke: #718fc4;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.pencil-pressure { stroke-width: 1.65; opacity: .75; }
+.label svg { height: clamp(48px, 8vw, 80px); }
+.works-page main {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 66px 18px 10px 0;
+}
+.artwork { display: block; width: min(100%, calc((100svh - 76px) * 0.71)); height: auto; }
+.works-page nav { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+.works-page nav a { max-width: 100%; }
+.works-page nav svg { height: clamp(46px, 9vw, 112px); }
+.works-page nav a[href="./arts.html"] svg { height: clamp(62px, 12vw, 152px); }
+.arts-page main { width: 100%; }
+.arts-page .artwork { width: min(92vw, calc((100svh - 76px) * 0.71)); margin: 66px 0 10px; }
+.arts-page h1, .professional-page h1 { position: absolute; top: 22px; left: 50%; transform: translateX(-50%); margin: 0; color: var(--text-color); font: 28px cursive; }
+.back { position: absolute; top: 40px; right: 22px; color: var(--secondary-text-color); }
+.contact-page h1 { margin: 0; }
+.contact-page h1 svg { height: 45px; stroke: var(--text-color); stroke-width: 1.5; }

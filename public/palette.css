@@ -1,0 +1,11 @@
+:root {
+  --page-background: linear-gradient(170.06735036381832deg, #f0f0f0 0.27335%, #fff 184.45%);
+  --text-color: #1d1d1d;
+  --secondary-text-color: #555;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--page-background);
+  color: var(--text-color);
+}
